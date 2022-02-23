@@ -9,7 +9,7 @@ mercadopago.configure({
 });
 
 export const getMyOrder = async (req: Request, res: Response) => {
-    const userExist = await User.find({email: req.email});
+    const userExist = await User.find({email: req.user?.email});
     if (!userExist) res.status(400).send({success: false});
     
     const orders = await Order.findById(req.params.id)
@@ -17,10 +17,10 @@ export const getMyOrder = async (req: Request, res: Response) => {
 }
 
 export const getAllMyOrders =  async (req: Request, res: Response) => {
-    const userExist = await User.find({email: req.email});
+    const userExist = await User.find({email: req.user?.email});
     if (!userExist) res.status(400).send({success: false});
     
-    const orders = await Order.find({userEmail: req.email})
+    const orders = await Order.find({userEmail: req.user?.email})
     res.send(orders)
 }
 
@@ -62,19 +62,19 @@ export const mpnotification =  async (req: Request, res: Response) => {
 
 
 export const addMyOrder = async (req: Request,res: Response)=>{
-    const userExist = await User.findOne({email: req.email});
+    const userExist = await User.findOne({email: req.user?.email});
     if (!userExist) return res.status(400).send({success: false});
     
     let order = new Order({
         ...req.body,
-        userEmail: req.email, 
+        userEmail: req.user?.email, 
     })
     console.log(order)
     order = await order.save();
 
     if(!order) return res.status(400).send({success: false, message: 'The order cannot be created!'})
     
-    const mailResponse = await orderConfirmMail(userExist.name, req.email, req.body.paymentMPStatus, order._id)
+    const mailResponse = await orderConfirmMail(userExist.name, req.user?.email, req.body.paymentMPStatus, order._id)
     if (!mailResponse) return res.status(400).send({success:false, message: mailResponse});
     return res.status(200).send({success: true, message: mailResponse, order})
 }

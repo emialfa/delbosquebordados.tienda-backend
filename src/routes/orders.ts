@@ -2,22 +2,23 @@ import { addMyOrder, addPayment, deleteOrder, feedback, getAllMyOrders, getAllOr
 import {Router} from 'express';
 const router = Router();
 const { authJwt, authAdminJwt } = require("../helpers/jwt");
+const {verifyUser} = require("../authenticate")
 
-router.get("/single/:id",authJwt, getMyOrder)
+router.get("/single/:id",verifyUser, getMyOrder)
 
-router.get("/all", authJwt, getAllMyOrders)
+router.get("/all", verifyUser, getAllMyOrders)
 
-router.get("/admin/single/:id", authAdminJwt, getOrder)
+router.get("/admin/single/:id",verifyUser, authAdminJwt, getOrder)
 
-router.get('/admin/all', authAdminJwt, getAllOrders)
+router.get('/admin/all',verifyUser, authAdminJwt, getAllOrders)
 
 router.post('/mpwebhooks', mpwebhooks)
 
-router.post('/mpnotification', authJwt, mpnotification)
+router.post('/mpnotification', verifyUser, mpnotification)
 
-router.post('/', authJwt, addMyOrder)
+router.post('/', verifyUser, addMyOrder)
 
-router.put('/mpprefenceid',authJwt,  mpprefenceid)
+router.put('/mpprefenceid',verifyUser,  mpprefenceid)
 
 router.put('/:id', updateOrder)
 

@@ -1,10 +1,10 @@
 import { addCart, getCart } from '../controllers/cart';
 import {Router} from 'express';
 const router = Router();
-const { authJwt } = require("../helpers/jwt");
+const {verifyUser} = require("../authenticate")
 
-router.get('/', authJwt, getCart)
+router.get('/', verifyUser, getCart)
 
-router.post('/', authJwt, addCart)
+router.post('/', verifyUser, addCart)
 
 module.exports = router;

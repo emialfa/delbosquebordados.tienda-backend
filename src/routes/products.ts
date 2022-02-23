@@ -9,15 +9,16 @@ import {
   getProducts,
   updateProduct,
 } from "../controllers/products";
+const {verifyUser} = require("../authenticate")
 
 router.get("/", getProducts);
 
 router.get("/:id", getProduct);
 
-router.post("/", authAdminJwt, addProduct);
+router.post("/", verifyUser, authAdminJwt, addProduct);
 
-router.put("/:id", authAdminJwt, updateProduct);
+router.put("/:id", verifyUser, authAdminJwt, updateProduct);
 
-router.delete("/:id", authAdminJwt, deleteProduct);
+router.delete("/:id", verifyUser, authAdminJwt, deleteProduct);
 
 module.exports = router;

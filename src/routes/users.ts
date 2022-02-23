@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-const { authJwt, authAdminJwt } = require("../helpers/jwt");
+const { authAdminJwt } = require("../helpers/jwt");
 import {
   changepassword,
   confirm,
@@ -14,36 +14,41 @@ import {
   login,
   loginGoogleAuth,
   register,
-  registerGoogleAuth,
+  refreshToken,
   update,
+  logout
 } from "../controllers/users";
+const passport = require("passport")
+const {verifyUser} = require("../authenticate")
 
-router.get("/all", authAdminJwt, getAllUsers);
+router.get("/all", verifyUser, authAdminJwt, getAllUsers);
 
-router.get("/:id", authJwt, getUserFromId);
+router.get("/logout", verifyUser, logout);
 
-router.get("/", authJwt, getUserFromEmail);
+router.get("/:id", verifyUser, getUserFromId);
 
-router.put("/update", authJwt, update);
+router.get("/", verifyUser, getUserFromEmail);
 
-router.put("/changepassword", authJwt, changepassword);
+router.put("/update", verifyUser, update);
 
-router.post("/login", login);
+router.put("/changepassword", verifyUser, changepassword);
+
+router.post("/login", passport.authenticate("local"), login);
 
 router.post("/login/googleAuth", loginGoogleAuth);
 
 router.post("/register", register);
 
-router.post("/register/googleAuth", registerGoogleAuth);
+router.post("/refreshToken", refreshToken)
 
-router.post("/emailconfirm", authJwt, emailconfirm);
+router.post("/emailconfirm", verifyUser, emailconfirm);
 
-router.post("/confirm", authJwt, confirm);
+router.post("/confirm", verifyUser, confirm);
 
 router.post("/emailresetpassword", emailresetpassword);
 
 router.delete("/usertest", deleteTestUser);
 
-router.delete("/:id", authAdminJwt, deleteUser);
+router.delete("/:id", verifyUser, authAdminJwt, deleteUser);
 
 module.exports = router;

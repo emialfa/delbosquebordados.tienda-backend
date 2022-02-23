@@ -15,8 +15,22 @@ interface IUser {
     cart?: string;
     shippingAdress?: string;
     activation?: boolean;
-    favorites: ObjectId[] | string[];
+    favorites?: ObjectId[] | string[];
+    refreshToken?: ISession[];
+    authStrategy?: string;
+    _id?: string;
 }
+
+interface ISession {
+    refreshToken: string
+}
+
+const Session = new Schema<ISession>({
+    refreshToken: {
+      type: String,
+      default: "",
+    },
+  })
 const userSchema = new Schema<IUser>({
     name: {
         type: String,
@@ -40,6 +54,10 @@ const userSchema = new Schema<IUser>({
         type: Boolean,
         default: false,
     },
+    authStrategy: {
+        type: String,
+        default: "local",
+      },
     street: {
         type: String,
         default: ''
@@ -71,6 +89,9 @@ const userSchema = new Schema<IUser>({
         type: Boolean,
         default: false,
     },
+    refreshToken: {
+        type: [Session],
+      },
     favorites:  [{
         type: Schema.Types.ObjectId,
         ref: 'Product',
@@ -83,6 +104,11 @@ userSchema.virtual('id').get(function (this: {_id: Types.ObjectId}) {
 
 userSchema.set('toJSON', {
     virtuals: true,
+    transform: function (doc, ret, options) {
+        delete ret.refreshToken
+        return ret
+    }
 });
+
 
 export default model<IUser>('User', userSchema);

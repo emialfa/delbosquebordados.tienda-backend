@@ -23,6 +23,9 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.15",
     "@types/nodemailer": "^6.4.4",
+    "@types/passport": "^1.0.7",
+    "@types/passport-local": "^1.0.34",
+    "@types/passport-local-mongoose": "^6.1.0",
     "@types/supertest": "^2.0.11",
     "concurrently": "^7.0.0",
     "jest": "^27.5.0",
@@ -34,6 +37,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.27.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
@@ -44,6 +48,10 @@
     "mercadopago": "^1.5.12",
     "mongoose": "^6.2.0",
     "morgan": "^1.10.0",
-    "nodemailer": "^6.7.2"
+    "nodemailer": "^6.7.2",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0"
   }
 }

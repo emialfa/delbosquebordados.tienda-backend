@@ -1,10 +1,10 @@
 import { addFavorites, getFavorites } from '../controllers/favorites';
 import {Router} from 'express';
 const router = Router();
-const { authJwt } = require("../helpers/jwt");
+const {verifyUser} = require("../authenticate")
 
-router.get('/', authJwt, getFavorites)
+router.get('/', verifyUser, getFavorites)
 
-router.post('/', authJwt, addFavorites)
+router.post('/', verifyUser, addFavorites)
 
 module.exports = router;
