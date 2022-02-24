@@ -149,6 +149,57 @@ export const loginGoogleAuth = async (req: Request, res: Response) => {
   }
 };
 
+export const loginFacebookAuth = async (req: Request, res: Response) => {
+  const {accessToken, userID} = req.body
+
+  const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
+  
+  const data:any = await fetch(URL).then(res => res.json()).then(res => {return res})
+
+  const {email, name} = data            
+
+  const user = await User.findOne({email: email });
+  
+  if (user) {
+    const token = getToken({ _id: user._id })
+    const refreshToken = getRefreshToken({ _id: user._id })
+    user.refreshToken?.push({ refreshToken })
+    await user.save()
+    res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
+    return res.status(200).send({
+        success: true,
+        user: user.email,
+        token: token,
+        favorites: user.favorites,
+        cart: user.cart,
+        isAdmin: user.isAdmin,
+      });
+  } else {
+    let newUser = new User({
+      success: true,
+      email,
+      name,
+      favorites: req.body.favorites,
+      cart: req.body.cart,
+      refreshToken: [],
+      passwordHash: bcrypt.hashSync(process.env.GOOGLE_PASSWORD, 10),
+      isAdmin: false,
+      activation: true,
+    });
+    const token = getToken({ _id: newUser._id })
+    const refreshToken = getRefreshToken({ _id: newUser._id })
+    newUser.refreshToken?.push({ refreshToken })
+    await newUser.save()
+    res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
+    return res.status(200).send({
+        success: true,
+        token: token,
+        favorites: newUser.favorites,
+        cart: newUser.cart,
+        isAdmin: newUser.isAdmin,
+      });
+  }
+}
 export const register = async (req: Request, res: Response) => {
   const userExist = await User.findOne({ email: req.body.email });
   if (userExist) return res.status(400).send({success: false});

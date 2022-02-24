@@ -13,6 +13,7 @@ import {
   getUserFromId,
   login,
   loginGoogleAuth,
+  loginFacebookAuth,
   register,
   refreshToken,
   update,
@@ -36,6 +37,8 @@ router.put("/changepassword", verifyUser, changepassword);
 router.post("/login", passport.authenticate("local"), login);
 
 router.post("/login/googleAuth", loginGoogleAuth);
+
+router.post("/login/facebookAuth", loginFacebookAuth);
 
 router.post("/register", register);
 
