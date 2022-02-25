@@ -1,6 +1,6 @@
 # Delbosquebordados-tienda: Backend
 
-Backend of e-commerce with shopping cart, products, user sessions, google authentication, payment gateway with mercadopago and admin dashboard.
+Backend of e-commerce with shopping cart, products, user sessions, google and facebook authentication, payment gateway with mercadopago and admin dashboard.
 
 ## Technologies being used:
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white" />  <img src="https://img.shields.io/badge/Cloudinary-1572B6?style=for-the-badge&logo=cloudinary&logoColor=61DAFB" />  <img src="https://img.shields.io/badge/Nodemailer-20232A?style=for-the-badge&logo=nodemailer&logoColor=61DAFB" />  <img src="https://img.shields.io/badge/Mercadopago-0081CB?style=for-the-badge&logo=material-ui&logoColor=white" />   <img src="https://img.shields.io/badge/JSON--Web--Tokens-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white" />  <img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest&logoColor=white" />  
