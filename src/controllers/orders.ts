@@ -5,7 +5,7 @@ import User from '../models/user';
 const orderConfirmMail = require("../templates/order-confirm")
 
 mercadopago.configure({
-    access_token: 'APP_USR-8352366877704564-122122-071839bb63d47195efaa44d0a4d64c6a-619410249'
+    access_token: process.env.mp_access_token,
 });
 
 export const getMyOrder = async (req: Request, res: Response) => {
